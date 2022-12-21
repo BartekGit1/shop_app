@@ -11,11 +11,11 @@ import {
 } from "typeorm";
 import {isNotEmpty, IsNotEmpty} from "class-validator";
 import {type} from "os";
-import {Product} from "./category.entity";
+import {Category} from "./category.entity";
 import {catchError} from "rxjs";
 
 @Entity()
-export class Opinion
+export class Product
 {
     // @IsNotEmpty()
     @PrimaryColumn()
@@ -52,10 +52,10 @@ export class Opinion
     // category:Product;
 
     @PrimaryColumn()
-    productId:string;
+    categoryTitle:string;
 
-    @ManyToOne(()=>Product, (product)=>product.opinions)
-    product:Product;
+    @ManyToOne(()=>Category, (category)=>category.products)
+    category:Category;
 
 
 

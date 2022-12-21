@@ -26,9 +26,9 @@ export class ProductsController {
     }
 //localhost:3000/products POST
     @Post('products')
-    async addProduct(@Body() opinion:addProductDto){
-        opinion.productId=zmienna;
-        return await this.productsService.create(opinion);
+    async addProduct(@Body() product:addProductDto){
+        // opinion.productId=zmienna;
+        return await this.productsService.create(product);
     }
 
 //localhost:3000/products/id PUT

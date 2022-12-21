@@ -1,5 +1,5 @@
 import {Column, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
-import {Product} from "../../entities/category.entity";
+import {Category} from "../../entities/category.entity";
 import {IsNumber, IsString, IsUUID} from "class-validator";
 
 export class addProductDto {
@@ -20,8 +20,8 @@ export class addProductDto {
 
     // @IsString()
     // categoryTitle: string;
-    @IsUUID()
-    productId:string;
+    @IsString()
+    categoryTitle:string;
 
 }
 

@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {isNotEmpty, IsNotEmpty} from "class-validator";
 import {type} from "os";
-import {Product} from "./category.entity";
+import {Category} from "./category.entity";
 import {orderStateEnum} from "../enum/orderStateEnum";
 import {Field} from "type-graphql/dist/decorators";
 export enum ORDER_STATUS {

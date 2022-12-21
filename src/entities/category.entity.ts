@@ -10,7 +10,7 @@ import {
     Unique
 } from "typeorm";
 import {IsNotEmpty} from "class-validator";
-import {Opinion} from "./product.entity";
+import {Product} from "./product.entity";
 import {Field} from "type-graphql/dist/decorators";
 
 
@@ -25,13 +25,13 @@ export enum CATEGORIES {
 }
 
 @Entity()
-export class Product
+export class Category
 {
     // @PrimaryColumn()
     // title:string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id:string;
+    @PrimaryColumn()
+    title:string;
 
 
     // @OneToMany(() => Product, (product) => product.category)
@@ -39,7 +39,7 @@ export class Product
 
 
 
-    @OneToMany(()=>Opinion,(opinion)=>opinion.product)
-    opinions:Opinion[];
+    @OneToMany(()=>Product,(product)=>product.category)
+    products:Product[];
 
 }

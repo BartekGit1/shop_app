@@ -5,7 +5,7 @@ import { ProductsModule } from './Produkt/products.module';
 import { CategoryModule } from './Kategoria/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import {Product} from "./entities/category.entity";
+import {Category} from "./entities/category.entity";
 import {StatesModule} from "./Stan_Zamowienia/states.module";
 import {OrdersModule} from "./Zamowienia/orders.module";
 
