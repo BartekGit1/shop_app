@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Product} from "../entities/product.entity";
+import {Opinion} from "../entities/product.entity";
 import {Repository} from "typeorm";
 import {addProductDto} from "./dto/add-product-dto";
 import {updateProductInBodyDto} from "./dto/update-product-in-body-dto";
@@ -9,7 +9,7 @@ import {updateProductInLinkDto} from "./dto/update-product-dto";
 
 @Injectable()
 export class ProductsService{
-    constructor(@InjectRepository(Product)private repo : Repository<Product>) {}
+    constructor(@InjectRepository(Opinion)private repo : Repository<Opinion>) {}
     getAll(){
 
         return this.repo.find();
@@ -19,7 +19,7 @@ export class ProductsService{
         return( this.repo.findBy({id}));
     }
 
-    async create(product: addProductDto)
+    async create(opinion: addProductDto)
     {
         // const id= Math.round(Math.random()*1000);
         // const newProduct = {id,title,price};
@@ -28,9 +28,12 @@ export class ProductsService{
 
 
     // product.categoryTitle="1";
-        console.log(product);
-        const data=this.repo.create(product);
-        // console.log(product.categoryTitle);
+    //     product.categoryTitle="narzedzia";
+        console.log(opinion);
+    //     const data=this.repo.create(product);
+        // // console.log(product.categoryTitle);
+        // return this.repo.save(data);
+        const data=this.repo.create(opinion);
         return this.repo.save(data);
     }
    async updateWithLink(id:string,product:updateProductInLinkDto)

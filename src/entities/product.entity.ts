@@ -5,17 +5,17 @@ import {
     JoinColumn,
     JoinTable,
     ManyToMany,
-    ManyToOne,
+    ManyToOne, OneToMany, OneToOne,
     PrimaryColumn,
     PrimaryGeneratedColumn
 } from "typeorm";
 import {isNotEmpty, IsNotEmpty} from "class-validator";
 import {type} from "os";
-import {Category} from "./category.entity";
+import {Product} from "./category.entity";
 import {catchError} from "rxjs";
 
 @Entity()
-export class Product
+export class Opinion
 {
     // @IsNotEmpty()
     @PrimaryColumn()
@@ -23,7 +23,6 @@ export class Product
 
     @Column()
     title:string;
-
     @Column()
     description:string;
 
@@ -46,9 +45,19 @@ export class Product
     // category:Category;
 
 
-    @ManyToOne(title=>Category)
-    @JoinColumn({name:"categoryTitle",referencedColumnName:"title"})
-    category:Category;
+
+    //
+    // @ManyToOne(()=>Category)
+    // @JoinColumn({name:"categoryTitle"})
+    // category:Product;
+
+    @PrimaryColumn()
+    productId:string;
+
+    @ManyToOne(()=>Product, (product)=>product.opinions)
+    product:Product;
+
+
 
 }
 

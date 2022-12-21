@@ -1,6 +1,16 @@
-import {Column, Entity, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Unique} from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToMany,
+    ManyToOne,
+    OneToMany, OneToOne,
+    PrimaryColumn,
+    PrimaryGeneratedColumn,
+    Unique
+} from "typeorm";
 import {IsNotEmpty} from "class-validator";
-import {Product} from "./product.entity";
+import {Opinion} from "./product.entity";
 import {Field} from "type-graphql/dist/decorators";
 
 
@@ -15,15 +25,21 @@ export enum CATEGORIES {
 }
 
 @Entity()
-export class Category
+export class Product
 {
-    @PrimaryColumn()
-    title:string;
+    // @PrimaryColumn()
+    // title:string;
+
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
 
 
-    // @ManyToMany(() => Product, (product) => product.categories)
-    // products: Product[];
-    @OneToMany(() => Product, (product) => product.category)
-    products: Category[];
+    // @OneToMany(() => Product, (product) => product.category)
+    // products: Product;
+
+
+
+    @OneToMany(()=>Opinion,(opinion)=>opinion.product)
+    opinions:Opinion[];
 
 }
