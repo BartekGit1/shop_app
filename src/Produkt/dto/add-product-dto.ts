@@ -1,6 +1,4 @@
-import {Column, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
-import {Category} from "../../entities/category.entity";
-import {IsNumber, IsString, IsUUID} from "class-validator";
+import {IsNumber, IsString} from "class-validator";
 
 export class addProductDto {
     @IsString()
@@ -18,10 +16,8 @@ export class addProductDto {
     @IsNumber()
     weight: number;
 
-    // @IsString()
-    // categoryTitle: string;
     @IsString()
-    categoryTitle:string;
+    categoryTitle: string;
 
 }
 

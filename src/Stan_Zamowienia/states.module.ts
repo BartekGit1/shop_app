@@ -5,12 +5,13 @@ import {OrderState} from "../entities/orderState.entity";
 import {StatesController} from "./states.controller";
 
 @Module({
-    imports:[TypeOrmModule.forFeature([
+    imports: [TypeOrmModule.forFeature([
         OrderState,
     ])
     ],
-    controllers:[StatesController],
-    providers:[StatesService]
+    controllers: [StatesController],
+    providers: [StatesService]
 })
 
-export class StatesModule{}
+export class StatesModule {
+}

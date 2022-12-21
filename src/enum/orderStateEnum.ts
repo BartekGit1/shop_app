@@ -1,6 +1,6 @@
-export enum orderStateEnum{
-    NOTAPPROVED='NOTAPPROVED',
-    APPROVED='APPROVED',
-    CANCELED='CANCELED',
-    COMPLETED='COMPLETED'
+export enum orderStateEnum {
+    NOTAPPROVED = 'NOTAPPROVED',
+    APPROVED = 'APPROVED',
+    CANCELED = 'CANCELED',
+    COMPLETED = 'COMPLETED'
 }

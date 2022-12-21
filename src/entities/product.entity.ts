@@ -7,7 +7,7 @@ import {
     ManyToMany,
     ManyToOne, OneToMany, OneToOne,
     PrimaryColumn,
-    PrimaryGeneratedColumn
+    PrimaryGeneratedColumn, Unique
 } from "typeorm";
 import {isNotEmpty, IsNotEmpty} from "class-validator";
 import {type} from "os";
@@ -17,8 +17,8 @@ import {catchError} from "rxjs";
 @Entity()
 export class Product
 {
-    // @IsNotEmpty()
-    @PrimaryColumn()
+
+    @PrimaryColumn({unique:true})
     id:string;
 
     @Column()
@@ -32,24 +32,6 @@ export class Product
 
     @Column({type:'decimal'})
     weight:number;
-
-    // @PrimaryColumn()
-    // categoryText:string;
-    // @IsNotEmpty()
-    // // @ManyToOne(()=>Category,(category)=>category.products)
-    // @ManyToMany(()=>Category,(category)=>category.products)
-    // @JoinTable()
-    // categories:Category[];
-
-    // @JoinColumn({name:"categoryTitle",referencedColumnName:"title"})
-    // category:Category;
-
-
-
-    //
-    // @ManyToOne(()=>Category)
-    // @JoinColumn({name:"categoryTitle"})
-    // category:Product;
 
     @PrimaryColumn()
     categoryTitle:string;

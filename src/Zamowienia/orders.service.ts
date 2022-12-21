@@ -4,9 +4,11 @@ import {Repository} from "typeorm";
 import {Order} from "../entities/order.entity";
 
 @Injectable()
-export class OrdersService{
-    constructor(@InjectRepository(Order)private repo : Repository<Order>) {}
-    getAll(){
+export class OrdersService {
+    constructor(@InjectRepository(Order) private repo: Repository<Order>) {
+    }
+
+    getAll() {
 
         return this.repo.find();
     }

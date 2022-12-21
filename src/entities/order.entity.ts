@@ -1,40 +1,27 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    PrimaryColumn,
-    PrimaryGeneratedColumn
-} from "typeorm";
-import {isNotEmpty, IsNotEmpty} from "class-validator";
-import {type} from "os";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn} from "typeorm";
 import {OrderState} from "./orderState.entity";
 import {OrderedProducts} from "./orderedProducts.entity";
-import {Field} from "type-graphql/dist/decorators";
 
 @Entity()
-export class Order
-{
+export class Order {
     @PrimaryColumn()
-    id:number;
+    id: number;
 
     @Column()
-    orderDate:Date;
+    orderDate: Date;
 
     @Column()
-    userName:String;
+    userName: String;
 
     @Column()
-    email:String;
+    email: String;
 
     @Column()
-    phoneNumber:String;
+    phoneNumber: String;
 
-    @ManyToOne(()=>OrderState)
-    status:OrderState;
+    @ManyToOne(() => OrderState)
+    status: OrderState;
 
-    @OneToMany(()=>OrderedProducts,(orderedProducts)=>orderedProducts.order)
+    @OneToMany(() => OrderedProducts, (orderedProducts) => orderedProducts.order)
     orderedProducts: OrderedProducts[];
 }

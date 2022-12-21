@@ -7,6 +7,7 @@ import {OrderState} from "../entities/orderState.entity";
 export class StatesService{
     constructor(@InjectRepository(OrderState)private repo : Repository<OrderState>) {}
     getAll(){
+        console.log(this.repo.find());
 
         return this.repo.find();
     }
