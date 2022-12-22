@@ -1,8 +1,8 @@
 import {Body, Controller, Get, Param, Post, Put} from "@nestjs/common";
 import {ProductsService} from "./products.service";
-import {addProductDto} from "./dto/add-product-dto";
-import {updateProductInLinkDto} from "./dto/update-product-dto";
-import {updateProductInBodyDto} from "./dto/update-product-in-body-dto";
+import {addProductDto} from "../dto/add-product-dto";
+import {updateProductInLinkDto} from "../dto/update-product-dto";
+import {updateProductInBodyDto} from "../dto/update-product-in-body-dto";
 
 var zmienna = 'dfcc63ff-b1e2-40d8-aa85-8078930676e9';
 

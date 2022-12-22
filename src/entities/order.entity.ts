@@ -1,6 +1,6 @@
 import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn} from "typeorm";
-import {OrderState} from "./orderState.entity";
-import {OrderedProducts} from "./orderedProducts.entity";
+
+import {OrderedProduct} from "./orderedProducts.entity";
 
 @Entity()
 export class Order {
@@ -19,9 +19,14 @@ export class Order {
     @Column()
     phoneNumber: String;
 
-    @ManyToOne(() => OrderState)
-    status: OrderState;
+    @Column()
+    amount:String;
 
-    @OneToMany(() => OrderedProducts, (orderedProducts) => orderedProducts.order)
-    orderedProducts: OrderedProducts[];
+    @Column()
+    order:String;
+    // @ManyToOne(() => OrderState)
+    // status: OrderState;
+
+    @OneToMany(() => OrderedProduct, (orderedProducts) => orderedProducts.orders)
+    idOrder: OrderedProduct[];
 }

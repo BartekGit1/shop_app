@@ -2,9 +2,9 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Product} from "../entities/product.entity";
 import {Repository} from "typeorm";
-import {addProductDto} from "./dto/add-product-dto";
-import {updateProductInBodyDto} from "./dto/update-product-in-body-dto";
-import {updateProductInLinkDto} from "./dto/update-product-dto";
+import {addProductDto} from "../dto/add-product-dto";
+import {updateProductInBodyDto} from "../dto/update-product-in-body-dto";
+import {updateProductInLinkDto} from "../dto/update-product-dto";
 
 
 @Injectable()

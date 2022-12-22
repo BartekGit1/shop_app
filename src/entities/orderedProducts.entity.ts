@@ -2,13 +2,15 @@ import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm";
 import {Order} from "./order.entity";
 
 @Entity()
-export class OrderedProducts {
+export class OrderedProduct {
     @PrimaryColumn()
-    productId: number;
-
+    id:string;
     @Column()
+    order: string;
+
+    @Column({type:'int'})
     amount: number;
 
-    @ManyToOne(() => Order, (order) => order.id)
-    order: string;
+    @ManyToOne(() => Order, (order) => order.idOrder)
+    orders: Order;
 }
