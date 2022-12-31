@@ -2,7 +2,7 @@ import {Body, Controller, Get, Post} from "@nestjs/common";
 
 
 import {addOrderDto} from "../dto/add-order-dto";
-import {OrderedProductService} from "./orderedProduct.service";
+
 import {OrdersService} from "./orders.service";
 
 @Controller()
@@ -11,9 +11,8 @@ export class OrdersController {
     private orderedProductService;
 
     // constructor(ordersService: OrdersService) {
-    constructor(ordersService: OrdersService,orderedProductService:OrderedProductService) {
+    constructor(ordersService: OrdersService) {
         this.ordersService = ordersService;
-        this.orderedProductService=orderedProductService;
     }
 
 // //localhost:3000/status

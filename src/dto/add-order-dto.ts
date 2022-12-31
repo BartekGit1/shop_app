@@ -21,13 +21,20 @@ export class addOrderDto {
     @IsString()
     phoneNumber: String;
 
-    @Field(()=>[OrderedProductInput])
-    @ArrayNotEmpty()
-    orderedProducts?:OrderedProductInput[];
+    @IsInt()
+    amountOfOrderedProducts:number;
 
-    @Field(()=>[OrderedProductInput])
-    @ArrayNotEmpty()
-    amountOfOrderedProducts?:OrderedProductInput[];
+    @IsString()
+    orderedProducts:string;
+    // @Field(()=>[OrderedProductInput])
+    // @IsString()
+    // // @ArrayNotEmpty()
+    // orderedProducts?:OrderedProductInput;
+    //
+    // @Field(()=>[OrderedProductInput])
+    // @IsString()
+    // // @ArrayNotEmpty()
+    // amountOfOrderedProducts?:OrderedProductInput;
 
 }
 
