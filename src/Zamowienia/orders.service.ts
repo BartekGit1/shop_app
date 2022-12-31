@@ -13,9 +13,6 @@ export class OrdersService{
         @InjectRepository(OrderedProduct) private orderedProductRepository: Repository<OrderedProduct>,
         @InjectRepository(Order)private orderRepository : Repository<Order>) {}
     getAllOrd(){
-       //  console.log(this.orderRepository.find());
-       //  await this.orderedProductRepository.find();
-       // return await this.orderRepository.find();
     return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts','orderedProducts').getMany();
 
     }
@@ -36,6 +33,17 @@ export class OrdersService{
         });
         task1.order=zamowienie.id;
         await this.orderedProductRepository.save(task1);
+    }
+
+   async UpdateStateById(id: string,stan:string){
+        // console.log(id);
+        // console.log(stan)
+
+        const productElement = await this.orderRepository.findOneBy({id});
+        productElement.orderStatus=stan;
+        return this.orderRepository.save(productElement);
+        // return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts','orderedProducts').getMany();
+
     }
 
 }

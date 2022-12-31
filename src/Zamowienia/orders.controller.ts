@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from "@nestjs/common";
+import {Body, Controller, Get, Param, Post, Put} from "@nestjs/common";
 
 
 import {addOrderDto} from "../dto/add-order-dto";
@@ -38,4 +38,20 @@ export class OrdersController {
 
     }
 
+
+    @Post('orders')
+    async getOrderByState(@Body() orders: addOrderDto) {
+        await this.ordersService.create(orders);
+        // await this.orderedProductService.addOrderedProducts(orders.orderedProducts,orders.amountOfOrderedProducts);
+        // await this.orderedProductService.addOrderedProducts(orders);
+        return;
+    }
+
+    @Put('orders/:id')
+    async UpdateOrder(@Param('id') productId: string,@Body() body:{orderStatus:string}) {
+        await this.ordersService.UpdateStateById(productId,body.orderStatus);
+        // await this.orderedProductService.addOrderedProducts(orders.orderedProducts,orders.amountOfOrderedProducts);
+        // await this.orderedProductService.addOrderedProducts(orders);
+        return;
+    }
 }

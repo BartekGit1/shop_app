@@ -5,8 +5,8 @@ import {ProductsModule} from './Produkt/products.module';
 import {CategoryModule} from './Kategoria/category.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule} from '@nestjs/config';
-// import {StatesModule} from "./Stan_Zamowienia/states.module";
 import {OrdersModule} from "./Zamowienia/orders.module";
+import {StatesModule} from "./Stan_Zamowienia/states.module";
 
 @Module({
     imports: [
@@ -24,7 +24,7 @@ import {OrdersModule} from "./Zamowienia/orders.module";
         }),
         ProductsModule,
         CategoryModule,
-        // StatesModule,
+        StatesModule,
         OrdersModule,
     ],
     controllers: [AppController],
