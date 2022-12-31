@@ -39,12 +39,13 @@ export class OrdersController {
     }
 
 
-    @Post('orders')
-    async getOrderByState(@Body() orders: addOrderDto) {
-        await this.ordersService.create(orders);
+    @Get('orders/status/:id')
+     getOrderByState(@Param('id') status:string) {
+        console.log("UUAA"+status);
+        return  this.ordersService.getOrderByState(status);
         // await this.orderedProductService.addOrderedProducts(orders.orderedProducts,orders.amountOfOrderedProducts);
         // await this.orderedProductService.addOrderedProducts(orders);
-        return;
+
     }
 
     @Put('orders/:id')

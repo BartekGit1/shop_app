@@ -36,13 +36,18 @@ export class OrdersService{
     }
 
    async UpdateStateById(id: string,stan:string){
-        // console.log(id);
-        // console.log(stan)
-
         const productElement = await this.orderRepository.findOneBy({id});
         productElement.orderStatus=stan;
         return this.orderRepository.save(productElement);
-        // return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts','orderedProducts').getMany();
+    }
+
+      async getOrderByState(state:string)
+    {
+        return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts','orderedProducts')
+            .where('order.orderStatus=:abc',{abc:state}).getMany();
+        // return await this.orderRepository.find({
+        //     where:{orderStatus:state}
+        // })
 
     }
 
