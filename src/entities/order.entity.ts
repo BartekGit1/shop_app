@@ -1,14 +1,15 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 
 import {OrderedProduct} from "./orderedProducts.entity";
 
 @Entity()
 export class Order {
-    @PrimaryColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
-    orderDate: Date;
+    // orderDate: Date;
+    orderDate: String;
 
     @Column()
     userName: String;
@@ -19,14 +20,48 @@ export class Order {
     @Column()
     phoneNumber: String;
 
-    @Column()
-    amount:String;
 
-    @Column()
-    order:String;
     // @ManyToOne(() => OrderState)
     // status: OrderState;
 
-    @OneToMany(() => OrderedProduct, (orderedProducts) => orderedProducts.orders)
-    idOrder: OrderedProduct[];
+    @OneToMany(() => OrderedProduct, (orderedProduct) => orderedProduct.order)
+    orderedProducts: OrderedProduct[];
+    // @OneToMany(() => OrderedProduct, (orderedProduct) => orderedProduct.order)
+    // orderedProducts: OrderedProduct[];
+
 }
+
+
+
+// import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+//
+// import {OrderedProduct} from "./orderedProducts.entity";
+//
+// @Entity()
+// export class Order {
+//     @PrimaryGeneratedColumn('uuid')
+//     id: string;
+//
+//     @Column()
+//         // orderDate: Date;
+//     orderDate: String;
+//
+//     @Column()
+//     userName: String;
+//
+//     @Column()
+//     email: String;
+//
+//     @Column()
+//     phoneNumber: String;
+//
+//
+//     // @ManyToOne(() => OrderState)
+//     // status: OrderState;
+//
+//     @OneToMany(() => OrderedProduct, (orderedProducts) => orderedProducts.order)
+//     orderedProducts: OrderedProduct[];
+//     //
+//     // @OneToMany(() => OrderedProduct, (orderedProducts) => orderedProducts.orders)
+//     // idOrder: OrderedProduct[];
+// }
