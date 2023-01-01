@@ -5,24 +5,32 @@ import {Repository} from "typeorm";
 import {Order} from "../entities/order.entity";
 import {addOrderDto} from "../dto/add-order-dto";
 import {OrderedProduct} from "../entities/orderedProducts.entity";
-import {Product} from "../entities/product.entity";
+import {OrderState, orderStateEnum} from "../entities/orderState.entity";
 
 @Injectable()
 export class OrdersService{
     constructor(
         @InjectRepository(OrderedProduct) private orderedProductRepository: Repository<OrderedProduct>,
+        @InjectRepository(OrderState) private orderStateRepository: Repository<OrderState>,
         @InjectRepository(Order)private orderRepository : Repository<Order>) {}
     getAllOrd(){
     return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts','orderedProducts').getMany();
 
     }
     async create(order: addOrderDto) {
+
+        const statystyki=await this.orderStateRepository.findOne({where:{title:orderStateEnum.NOTAPPROVED}});
+
+        // console.log(statystyki.);
+
         const zamowienie = this.orderRepository.create(
             {
                 orderDate: order.orderDate,
                 userName: order.userName,
                 email: order.email,
-                phoneNumber: order.phoneNumber
+                phoneNumber: order.phoneNumber,
+                status:statystyki.id
+
             }
         )
 
@@ -37,14 +45,20 @@ export class OrdersService{
 
    async UpdateStateById(id: string,stan:string){
         const productElement = await this.orderRepository.findOneBy({id});
-        productElement.orderStatus=stan;
+
+        const newStatus = await  this.orderStateRepository.findOneBy({title:orderStateEnum[stan]})
+       // console.log(newStatus.id);
+        productElement.status=newStatus.id;
+        // productElement.orderStatus=orderStateEnum[stan];
         return this.orderRepository.save(productElement);
     }
 
       async getOrderByState(state:string)
     {
+
+        const newStatus = await  this.orderStateRepository.findOneBy({title:orderStateEnum[state]})
         return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts','orderedProducts')
-            .where('order.orderStatus=:abc',{abc:state}).getMany();
+            .where('order.status=:abc',{abc:newStatus.id}).getMany();
         // return await this.orderRepository.find({
         //     where:{orderStatus:state}
         // })

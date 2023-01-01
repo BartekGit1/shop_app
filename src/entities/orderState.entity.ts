@@ -14,18 +14,16 @@ export enum orderStateEnum {
 @ObjectType()
 @Entity()
 export class OrderState {
-    // @PrimaryGeneratedColumn()
-    // id!:number;
+    @PrimaryGeneratedColumn()
+    id!:number;
 
-
-        // {
-        // unique:true,
-        // type: 'enum',
-        // enum: orderStateEnum,
+    @Column(   {
+        unique:true,
+        type: 'enum',
+        enum: orderStateEnum,
         // default: orderStateEnum.NOTAPPROVED,
-    // }
-    @PrimaryColumn()
-    title: string;
+    })
+    title: orderStateEnum.NOTAPPROVED;
 
 
 

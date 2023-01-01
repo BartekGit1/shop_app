@@ -2,13 +2,8 @@ import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedCol
 
 import {OrderedProduct} from "./orderedProducts.entity";
 import {OrderState} from "./orderState.entity";
+import {Field} from "type-graphql/dist/decorators";
 
-export enum ORDER_STATUS {
-    NOT_CONFIRMED = 'not confirmed',
-    CONFIRMED = 'confirmed',
-    CANCELLED = 'cancelled',
-    COMPLETED = 'completed',
-}
 @Entity()
 export class Order {
     @PrimaryGeneratedColumn('uuid')
@@ -27,13 +22,10 @@ export class Order {
     @Column()
     phoneNumber: String;
 
-    @Column({
-        // unique: true,
-        type: 'enum',
-        enum: ORDER_STATUS,
-        default: ORDER_STATUS.NOT_CONFIRMED,
-    })
-    orderStatus: string
+    @Field(() => OrderState)
+    @ManyToOne(() => OrderState)
+    status: number;
+
 
     @OneToMany(() => OrderedProduct, (orderedProduct) => orderedProduct.order)
     orderedProducts: OrderedProduct[];

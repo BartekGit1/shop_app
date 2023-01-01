@@ -40,17 +40,17 @@ export class OrdersController {
 
 
     @Get('orders/status/:id')
-     getOrderByState(@Param('id') status:string) {
-        console.log("UUAA"+status);
-        return  this.ordersService.getOrderByState(status);
+    async  getOrderByState(@Param('id') status:string) {
+
+        return  await this.ordersService.getOrderByState(status);
         // await this.orderedProductService.addOrderedProducts(orders.orderedProducts,orders.amountOfOrderedProducts);
         // await this.orderedProductService.addOrderedProducts(orders);
 
     }
 
     @Put('orders/:id')
-    async UpdateOrder(@Param('id') productId: string,@Body() body:{orderStatus:string}) {
-        await this.ordersService.UpdateStateById(productId,body.orderStatus);
+     UpdateOrder(@Param('id') productId: string,@Body() body:{orderStatus:string}) {
+         this.ordersService.UpdateStateById(productId,body.orderStatus);
         // await this.orderedProductService.addOrderedProducts(orders.orderedProducts,orders.amountOfOrderedProducts);
         // await this.orderedProductService.addOrderedProducts(orders);
         return;
