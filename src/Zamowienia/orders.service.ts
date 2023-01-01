@@ -44,12 +44,16 @@ export class OrdersService{
     }
 
    async UpdateStateById(id: string,stan:string){
-        const productElement = await this.orderRepository.findOneBy({id});
+        // const productElement = await this.orderRepository.findOneBy({id});
+        const productElement = await this.orderRepository.findOneBy({id:id});
 
-        const newStatus = await  this.orderStateRepository.findOneBy({title:orderStateEnum[stan]})
-       // console.log(newStatus.id);
-        productElement.status=newStatus.id;
-        // productElement.orderStatus=orderStateEnum[stan];
+        const newState = await  this.orderStateRepository.findOneBy({title:orderStateEnum[stan]})
+
+
+console.log(newState.title)
+console.log(productElement.status)
+
+        productElement.status=newState.id;
         return this.orderRepository.save(productElement);
     }
 

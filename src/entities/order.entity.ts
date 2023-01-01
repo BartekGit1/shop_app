@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 
 import {OrderedProduct} from "./orderedProducts.entity";
 import {OrderState} from "./orderState.entity";
@@ -10,8 +10,7 @@ export class Order {
     id: string;
 
     @Column()
-    // orderDate: Date;
-    orderDate: String;
+    orderDate: Date;
 
     @Column()
     userName: String;

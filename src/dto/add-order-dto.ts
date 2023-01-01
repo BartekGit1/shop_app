@@ -1,4 +1,4 @@
-import {ArrayNotEmpty, IsDate, IsInt, IsNumber, IsString} from "class-validator";
+import {ArrayNotEmpty, IsDate, IsEmail, IsInt, IsNotEmpty, IsNumber, IsString} from "class-validator";
 import {Column, PrimaryColumn} from "typeorm";
 import {Field} from "type-graphql/dist/decorators";
 import {OrderedProduct} from "../entities/orderedProducts.entity";
@@ -8,14 +8,15 @@ export class addOrderDto {
     // id: number;
 
     // @IsDate()
-    // orderDate: Date;
-    @IsString()
+    @IsNotEmpty()
     orderDate: String;
+    // @IsString()
+    // orderDate: String;
 
     @IsString()
     userName: String;
 
-    @IsString()
+    @IsEmail()
     email: String;
 
     @IsString()
