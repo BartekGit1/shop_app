@@ -9,8 +9,8 @@ export class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    orderDate: Date;
+    @Column({nullable:true})
+    orderDate: Date|null;
 
     @Column()
     userName: String;

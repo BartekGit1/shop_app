@@ -5,6 +5,7 @@ import {Order} from "../entities/order.entity";
 import {addOrderDto} from "../dto/add-order-dto";
 import {OrderedProduct} from "../entities/orderedProducts.entity";
 import {OrderState, orderStateEnum} from "../entities/orderState.entity";
+import {Product} from "../entities/product.entity";
 
 
 @Injectable()
@@ -12,6 +13,7 @@ export class OrdersService {
     constructor(
         @InjectRepository(OrderedProduct) private orderedProductRepository: Repository<OrderedProduct>,
         @InjectRepository(OrderState) private orderStateRepository: Repository<OrderState>,
+        @InjectRepository(Product) private productRepository: Repository<Product>,
         @InjectRepository(Order) private orderRepository: Repository<Order>) {
     }
 
@@ -33,26 +35,32 @@ export class OrdersService {
         const statystyki = await this.orderStateRepository.findOne({where: {title: orderStateEnum.NOTAPPROVED}});
 
         // console.log(statystyki.);
+        const products = await this.productRepository.findOne({where: {title: order.orderedProducts}});
+        console.log("PRODUKTY")
+        console.log(products)
+        if (products == null) {
+            throw new HttpException('specified product doesnt exist in database', HttpStatus.NOT_FOUND)
 
+        } else {
+            const zamowienie = this.orderRepository.create(
+                {
+                    orderDate: order.orderDate,
+                    userName: order.userName,
+                    email: order.email,
+                    phoneNumber: order.phoneNumber,
+                    status: statystyki.id
 
-        const zamowienie = this.orderRepository.create(
-            {
-                orderDate: order.orderDate,
-                userName: order.userName,
-                email: order.email,
-                phoneNumber: order.phoneNumber,
-                status: statystyki.id
+                }
+            )
 
-            }
-        )
-
-        await this.orderRepository.save(zamowienie);
-        const task1 = this.orderedProductRepository.create({
-            orderedProducts: order.orderedProducts,
-            amountOfOrderedProducts: order.amountOfOrderedProducts
-        });
-        task1.order = zamowienie.id;
-        await this.orderedProductRepository.save(task1);
+            await this.orderRepository.save(zamowienie);
+            const task1 = this.orderedProductRepository.create({
+                orderedProducts: order.orderedProducts,
+                amountOfOrderedProducts: order.amountOfOrderedProducts
+            });
+            task1.order = zamowienie.id;
+            await this.orderedProductRepository.save(task1);
+        }
     }
 
     async UpdateStateById(id: string, stan: string) {

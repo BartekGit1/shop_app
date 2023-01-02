@@ -10,7 +10,7 @@ export class addOrderDto {
     // @IsDate()
     // @IsNotEmpty()
     @IsString()
-    orderDate: String;
+    orderDate: String|null;
     // @IsString()
     // orderDate: String;
 
