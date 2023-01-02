@@ -70,9 +70,10 @@ export class OrdersService {
         const productElement = await this.orderRepository.findOne({
             where: {id: id},
             relations: ['status'],
-            // loadRelationIds: true
+            loadRelationIds: true
         });
-
+        console.log("acotujest")
+console.log(productElement.status)
         if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (productElement.status == newState.id) {
