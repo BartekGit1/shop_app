@@ -1,27 +1,13 @@
-import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToMany,
-    ManyToOne,
-    OneToMany, OneToOne,
-    PrimaryColumn,
-    PrimaryGeneratedColumn,
-    Unique
-} from "typeorm";
-import {IsNotEmpty} from "class-validator";
+import {Entity, OneToMany, PrimaryColumn} from "typeorm";
 import {Product} from "./product.entity";
-import {Field} from "type-graphql/dist/decorators";
-
 
 
 @Entity()
-export class Category
-{
+export class Category {
     @PrimaryColumn()
-    title:string;
+    title: string;
 
-    @OneToMany(()=>Product,(product)=>product.category)
-    products:Product[];
+    @OneToMany(() => Product, (product) => product.category)
+    products: Product[];
 
 }

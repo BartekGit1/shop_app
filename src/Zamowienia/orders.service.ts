@@ -4,8 +4,9 @@ import {Repository} from "typeorm";
 import {Order} from "../entities/order.entity";
 import {addOrderDto} from "../dto/add-order-dto";
 import {OrderedProduct} from "../entities/orderedProducts.entity";
-import {OrderState, orderStateEnum} from "../entities/orderState.entity";
+import {OrderState} from "../entities/orderState.entity";
 import {Product} from "../entities/product.entity";
+import {orderStateEnum} from "../enum/orderStateEnum";
 
 
 @Injectable()
@@ -30,13 +31,11 @@ export class OrdersService {
             throw new HttpException('email cant be empty', HttpStatus.BAD_REQUEST)
         } else if (order.phoneNumber.length == 0) {
             throw new HttpException('phone number cant be empty', HttpStatus.BAD_REQUEST)
-        }
-        else if(order.amountOfOrderedProducts<=0)
-        {
+        } else if (order.amountOfOrderedProducts <= 0) {
             throw new HttpException('amount of ordered product must be positive number', HttpStatus.BAD_REQUEST)
         }
 
-        const statystyki = await this.orderStateRepository.findOne({where: {title: orderStateEnum.NOTAPPROVED}});
+        const Status = await this.orderStateRepository.findOne({where: {title: orderStateEnum.NOTAPPROVED}});
 
         const products = await this.productRepository.findOne({where: {title: order.orderedProducts}});
         if (products == null) {
@@ -50,8 +49,8 @@ export class OrdersService {
                     userName: order.userName,
                     email: order.email,
                     phoneNumber: order.phoneNumber,
-                    status: statystyki.id,
-                    id:order.id
+                    status: Status.id,
+                    id: order.id
 
 
                 }
@@ -69,39 +68,34 @@ export class OrdersService {
 
     async UpdateStateById(id: string, stan: string) {
 
-        // const productElement = await this.orderRepository.findOneBy({id:id});
-        if(stan==orderStateEnum.CANCELED||stan==orderStateEnum.NOTAPPROVED||stan==orderStateEnum.COMPLETED||stan==orderStateEnum.APPROVED){
-        const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[stan]})
-        const COMPLETED = await this.orderStateRepository.findOneBy({title: orderStateEnum.COMPLETED})
-        const NOTAPPROVED = await this.orderStateRepository.findOneBy({title: orderStateEnum.NOTAPPROVED})
-        const APPROVED = await this.orderStateRepository.findOneBy({title: orderStateEnum.APPROVED})
-        const CANCELED = await this.orderStateRepository.findOneBy({title: orderStateEnum.CANCELED})
+        if (stan == orderStateEnum.CANCELED || stan == orderStateEnum.NOTAPPROVED || stan == orderStateEnum.COMPLETED || stan == orderStateEnum.APPROVED) {
+            const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[stan]})
+            const COMPLETED = await this.orderStateRepository.findOneBy({title: orderStateEnum.COMPLETED})
+            const NOTAPPROVED = await this.orderStateRepository.findOneBy({title: orderStateEnum.NOTAPPROVED})
+            const APPROVED = await this.orderStateRepository.findOneBy({title: orderStateEnum.APPROVED})
+            const CANCELED = await this.orderStateRepository.findOneBy({title: orderStateEnum.CANCELED})
 
-        const productElement = await this.orderRepository.findOne({
-            where:{id: id},
-            relations: ['status'],
-            // loadRelationIds: true
-        });
+            const productElement = await this.orderRepository.findOne({
+                where: {id: id},
+                relations: ['status'],
+                // loadRelationIds: true
+            });
 
-        console.log(stan)
-        console.log(JSON.stringify(newState))
 
-        if (productElement == null) {
-            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
-        } else if (JSON.stringify(productElement.status) == JSON.stringify(newState)) {
-            throw new HttpException('new status cant be the same as old one', HttpStatus.FORBIDDEN);
-        } else if (JSON.stringify(productElement.status) == JSON.stringify(COMPLETED) && JSON.stringify(newState) == JSON.stringify(NOTAPPROVED)) {
-            throw new HttpException('status cant be changed from completed to not approved', HttpStatus.FORBIDDEN);
-        } else if (JSON.stringify(productElement.status) == JSON.stringify(CANCELED)) {
-            throw new HttpException('status of canceled order cant be changed', HttpStatus.FORBIDDEN);
-        }  else {
-            productElement.status = newState.id;
-            return this.orderRepository.save(productElement);
+            if (productElement == null) {
+                throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
+            } else if (JSON.stringify(productElement.status) == JSON.stringify(newState)) {
+                throw new HttpException('new status cant be the same as old one', HttpStatus.FORBIDDEN);
+            } else if (JSON.stringify(productElement.status) == JSON.stringify(COMPLETED) && JSON.stringify(newState) == JSON.stringify(NOTAPPROVED)) {
+                throw new HttpException('status cant be changed from completed to not approved', HttpStatus.FORBIDDEN);
+            } else if (JSON.stringify(productElement.status) == JSON.stringify(CANCELED)) {
+                throw new HttpException('status of canceled order cant be changed', HttpStatus.FORBIDDEN);
+            } else {
+                productElement.status = newState.id;
+                return this.orderRepository.save(productElement);
 
-        }
-        }
-        else
-        {
+            }
+        } else {
             throw new HttpException('this status doesnt exist in database', HttpStatus.NOT_FOUND)
         }
     }

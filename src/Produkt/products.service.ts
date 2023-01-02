@@ -21,8 +21,11 @@ export class ProductsService {
     }
 
     async create(product: addProductDto) {
-
-        if (product.price <= 0) {
+        if(product.id.length==0)
+        {
+            throw new HttpException('id cant be empty', HttpStatus.BAD_REQUEST)
+        }
+        else if (product.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
         } else if (product.weight <= 0) {
             throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
@@ -30,7 +33,8 @@ export class ProductsService {
             throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
         } else if (product.title.length == 0) {
             throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
-        } else {
+        }
+        else {
             const data = this.repo.create(product);
             return this.repo.save(data);
         }
@@ -38,7 +42,10 @@ export class ProductsService {
 
     async updateWithLink(id: string, product: updateProductInLinkDto) {
         const productElement = await this.repo.findOneBy({id});
-        if (product.price <= 0) {
+
+        if (productElement == null) {
+            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
+        } else if (product.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
         } else if (product.weight <= 0) {
             throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)

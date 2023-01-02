@@ -4,11 +4,11 @@ import {Repository} from "typeorm";
 import {OrderState} from "../entities/orderState.entity";
 
 @Injectable()
-export class StatesService{
-    constructor(@InjectRepository(OrderState)private repo : Repository<OrderState>) {}
-    getAll(){
-        console.log(this.repo.find());
+export class StatesService {
+    constructor(@InjectRepository(OrderState) private repo: Repository<OrderState>) {
+    }
 
+    getAll() {
         return this.repo.find();
     }
 

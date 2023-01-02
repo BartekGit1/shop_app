@@ -1,44 +1,29 @@
-import { Field, ObjectType } from 'type-graphql/dist/decorators'
-import {
-    Column,
-    Entity,
-    JoinColumn,
-    JoinTable,
-    ManyToMany,
-    ManyToOne, OneToMany, OneToOne,
-    PrimaryColumn,
-    PrimaryGeneratedColumn, Unique
-} from "typeorm";
-import {isNotEmpty, IsNotEmpty} from "class-validator";
-import {type} from "os";
+import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm";
 import {Category} from "./category.entity";
-import {catchError} from "rxjs";
 
 @Entity()
-export class Product
-{
+export class Product {
 
-    @PrimaryColumn({unique:true})
-    id:string;
+    @PrimaryColumn({unique: true})
+    id: string;
 
     @Column()
-    title:string;
+    title: string;
     @Column()
-    description:string;
+    description: string;
 
-    @Column({type:'decimal'})
-    price:number;
+    @Column({type: 'decimal'})
+    price: number;
 
 
-    @Column({type:'decimal'})
-    weight:number;
+    @Column({type: 'decimal'})
+    weight: number;
 
     @PrimaryColumn()
-    categoryTitle:string;
+    categoryTitle: string;
 
-    @ManyToOne(()=>Category, (category)=>category.products)
-    category:Category;
-
+    @ManyToOne(() => Category, (category) => category.products)
+    category: Category;
 
 
 }
