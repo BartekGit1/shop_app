@@ -21,9 +21,9 @@ export class OrderState {
         unique:true,
         type: 'enum',
         enum: orderStateEnum,
-        // default: orderStateEnum.NOTAPPROVED,
+        default: orderStateEnum.NOTAPPROVED,
     })
-    title: orderStateEnum.NOTAPPROVED;
+    title: orderStateEnum;
 
 
 
