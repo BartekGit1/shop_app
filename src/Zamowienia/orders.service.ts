@@ -34,21 +34,21 @@ export class OrdersService {
 
         const statystyki = await this.orderStateRepository.findOne({where: {title: orderStateEnum.NOTAPPROVED}});
 
-        // console.log(statystyki.);
         const products = await this.productRepository.findOne({where: {title: order.orderedProducts}});
-        console.log("PRODUKTY")
-        console.log(products)
         if (products == null) {
             throw new HttpException('specified product doesnt exist in database', HttpStatus.NOT_FOUND)
 
         } else {
             const zamowienie = this.orderRepository.create(
                 {
+
                     orderDate: order.orderDate,
                     userName: order.userName,
                     email: order.email,
                     phoneNumber: order.phoneNumber,
-                    status: statystyki.id
+                    status: statystyki.id,
+                    id:order.id
+
 
                 }
             )
@@ -70,7 +70,7 @@ export class OrdersService {
         const productElement = await this.orderRepository.findOne({
             where: {id: id},
             relations: ['status'],
-            loadRelationIds: true
+            // loadRelationIds: true
         });
 
         if (productElement == null) {
@@ -81,6 +81,8 @@ export class OrdersService {
             throw new HttpException('status cant be changed from completed to not approved', HttpStatus.FORBIDDEN);
         } else if (productElement.status == 4) {
             throw new HttpException('status of canceled order cant be changed', HttpStatus.FORBIDDEN);
+        } else if (newState.id != 1 && newState.id != 2 && newState.id != 3 && newState.id != 4) {
+            throw new HttpException('this status doesnt exist in database', HttpStatus.NOT_FOUND)
         } else {
             productElement.status = newState.id;
             return this.orderRepository.save(productElement);

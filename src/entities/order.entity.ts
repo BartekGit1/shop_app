@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 
 import {OrderedProduct} from "./orderedProducts.entity";
 import {OrderState} from "./orderState.entity";
@@ -6,11 +6,12 @@ import {Field} from "type-graphql/dist/decorators";
 
 @Entity()
 export class Order {
-    @PrimaryGeneratedColumn('uuid')
+    // @PrimaryGeneratedColumn('uuid')
+    @PrimaryColumn()
     id: string;
 
-    @Column({nullable:true})
-    orderDate: Date|null;
+    @Column()
+    orderDate: Date;
 
     @Column()
     userName: String;
@@ -24,7 +25,6 @@ export class Order {
     @Field(() => OrderState)
     @ManyToOne(() => OrderState)
     status: number;
-    // status: OrderState;
 
 
     @OneToMany(() => OrderedProduct, (orderedProduct) => orderedProduct.order)
@@ -33,6 +33,7 @@ export class Order {
     // orderedProducts: OrderedProduct[];
 
 }
+
 
 
 // import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";

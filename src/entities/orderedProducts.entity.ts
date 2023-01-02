@@ -1,6 +1,7 @@
 import {Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {Order} from "./order.entity";
 import internal from "stream";
+import {IsNotEmpty} from "class-validator";
 
 @Entity()
 export class OrderedProduct {
@@ -33,6 +34,7 @@ export class OrderedProduct {
 
 
     @ManyToOne(() => Order, (order) => order.orderedProducts)
+    @IsNotEmpty()
     order: String;
 
 

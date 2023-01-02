@@ -4,24 +4,24 @@ import {Field} from "type-graphql/dist/decorators";
 import {OrderedProduct} from "../entities/orderedProducts.entity";
 
 export class addOrderDto {
-    // @IsString()
-    // id: number;
+    @IsString()
+    id: string;
 
     // @IsDate()
     // @IsNotEmpty()
     @IsString()
-    orderDate: String|null;
+    orderDate: string|null;
     // @IsString()
     // orderDate: String;
 
     @IsString()
-    userName: String;
+    userName: string;
 
     @IsEmail()
-    email: String;
+    email: string;
 
     @IsMobilePhone()
-    phoneNumber: String;
+    phoneNumber: string;
 
     @IsInt()
     amountOfOrderedProducts:number;
