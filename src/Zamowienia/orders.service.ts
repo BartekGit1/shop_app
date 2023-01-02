@@ -31,6 +31,10 @@ export class OrdersService {
         } else if (order.phoneNumber.length == 0) {
             throw new HttpException('phone number cant be empty', HttpStatus.BAD_REQUEST)
         }
+        else if(order.amountOfOrderedProducts<=0)
+        {
+            throw new HttpException('amount of ordered product must be positive number', HttpStatus.BAD_REQUEST)
+        }
 
         const statystyki = await this.orderStateRepository.findOne({where: {title: orderStateEnum.NOTAPPROVED}});
 
