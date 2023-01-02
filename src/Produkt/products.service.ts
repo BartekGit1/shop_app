@@ -42,19 +42,9 @@ export class ProductsService {
 
     async updateWithLink(id: string, product: updateProductInLinkDto) {
         const productElement = await this.repo.findOneBy({id});
-
         if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
-        } else if (product.price <= 0) {
-            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
-        } else if (product.weight <= 0) {
-            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
-        } else if (product.description.length == 0) {
-            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
-        } else if (product.title.length == 0) {
-            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
-        } else {
-
+        }  else {
             productElement.price = product.price;
             productElement.title = product.title;
             productElement.categoryTitle = product.categoryTitle;
@@ -62,8 +52,6 @@ export class ProductsService {
             productElement.description = product.description;
             return this.repo.save(productElement);
         }
-
-
     }
 
     async UpdateWithParamsInBody(id: string, product: updateProductInBodyDto) {
@@ -71,15 +59,7 @@ export class ProductsService {
 
         if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
-        } else if (product.price <= 0) {
-            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
-        } else if (product.weight <= 0) {
-            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
-        } else if (product.description.length == 0) {
-            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
-        } else if (product.title.length == 0) {
-            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
-        } else {
+        }  else {
 
             productElement.price = product.price;
             productElement.title = product.title;

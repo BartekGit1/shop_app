@@ -1,11 +1,15 @@
-import {Body, Controller, Get, Param, Post, Put} from "@nestjs/common";
+import {Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put} from "@nestjs/common";
 import {ProductsService} from "./products.service";
 import {addProductDto} from "../dto/add-product-dto";
 import {updateProductInLinkDto} from "../dto/update-product-dto";
 import {updateProductInBodyDto} from "../dto/update-product-in-body-dto";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Product} from "../entities/product.entity";
+import {Repository} from "typeorm";
 
 @Controller()
 export class ProductsController {
+
     private productsService;
 
     constructor(productsService: ProductsService) {
@@ -27,7 +31,6 @@ export class ProductsController {
 //localhost:3000/products POST
     @Post('products')
     async addProduct(@Body() product: addProductDto) {
-        // opinion.productId=zmienna;
         return await this.productsService.create(product);
     }
 
@@ -35,14 +38,39 @@ export class ProductsController {
     @Put('products/:id')
     updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
 
+        if (body == null) {
+            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
+        } else if (body.price <= 0) {
+            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (body.weight <= 0) {
+            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (body.description.length == 0) {
+            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
+        } else if (body.title.length == 0) {
+            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
+        } else {
+
         this.productsService.updateWithLink(productId, body);
+        }
     }
 
 //localhost:3000/products PUT
     @Put('products')
     updateParamsInBody(@Body() body: updateProductInBodyDto) {
+        if (body == null) {
+            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
+        } else if (body.price <= 0) {
+            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (body.weight <= 0) {
+            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (body.description.length == 0) {
+            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
+        } else if (body.title.length == 0) {
+            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
+        } else {
         const productId = body.id;
         this.productsService.UpdateWithParamsInBody(productId, body);
+        }
     }
 
 
