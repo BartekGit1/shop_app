@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Put} from "@nestjs/common";
+import {Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put} from "@nestjs/common";
 
 
 import {addOrderDto} from "../dto/add-order-dto";
@@ -50,6 +50,7 @@ export class OrdersController {
 
     @Put('orders/:id')
      UpdateOrder(@Param('id') productId: string,@Body() body:{orderStatus:string}) {
+
          this.ordersService.UpdateStateById(productId,body.orderStatus);
         // await this.orderedProductService.addOrderedProducts(orders.orderedProducts,orders.amountOfOrderedProducts);
         // await this.orderedProductService.addOrderedProducts(orders);

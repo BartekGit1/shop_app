@@ -24,6 +24,7 @@ export class Order {
     @Field(() => OrderState)
     @ManyToOne(() => OrderState)
     status: number;
+    // status: OrderState;
 
 
     @OneToMany(() => OrderedProduct, (orderedProduct) => orderedProduct.order)
