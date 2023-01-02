@@ -1,4 +1,4 @@
-import {ArrayNotEmpty, IsDate, IsEmail, IsInt, IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {ArrayNotEmpty, IsDate, IsEmail, IsInt, IsMobilePhone, IsNotEmpty, IsNumber, IsString} from "class-validator";
 import {Column, PrimaryColumn} from "typeorm";
 import {Field} from "type-graphql/dist/decorators";
 import {OrderedProduct} from "../entities/orderedProducts.entity";
@@ -20,7 +20,7 @@ export class addOrderDto {
     @IsEmail()
     email: String;
 
-    @IsString()
+    @IsMobilePhone()
     phoneNumber: String;
 
     @IsInt()

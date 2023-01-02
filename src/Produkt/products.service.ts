@@ -22,51 +22,35 @@ export class ProductsService {
 
     async create(product: addProductDto) {
 
-        if(product.price<=0)
-        {
-            throw new HttpException('price must be higher than 0',HttpStatus.BAD_REQUEST)
-        }else if (product.weight<=0)
-        {
-            throw new HttpException('weight must be higher than 0',HttpStatus.BAD_REQUEST)
-        }
-        else if (product.description.length==0)
-        {
-            throw new HttpException('description cant be empty',HttpStatus.BAD_REQUEST)
-        }
-        else if (product.title.length==0)
-        {
-            throw new HttpException('title cant be empty',HttpStatus.BAD_REQUEST)
-        }
-        else
-        {
-        const data = this.repo.create(product);
-        return this.repo.save(data);
+        if (product.price <= 0) {
+            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (product.weight <= 0) {
+            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (product.description.length == 0) {
+            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
+        } else if (product.title.length == 0) {
+            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
+        } else {
+            const data = this.repo.create(product);
+            return this.repo.save(data);
         }
     }
 
     async updateWithLink(id: string, product: updateProductInLinkDto) {
         const productElement = await this.repo.findOneBy({id});
-        if(product.price<=0)
-        {
-            throw new HttpException('price must be higher than 0',HttpStatus.BAD_REQUEST)
-        }else if (product.weight<=0)
-        {
-            throw new HttpException('weight must be higher than 0',HttpStatus.BAD_REQUEST)
-        }
-        else if (product.description.length==0)
-        {
-            throw new HttpException('description cant be empty',HttpStatus.BAD_REQUEST)
-        }
-        else if (product.title.length==0)
-        {
-            throw new HttpException('title cant be empty',HttpStatus.BAD_REQUEST)
-        }
-        else
-        {
+        if (product.price <= 0) {
+            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (product.weight <= 0) {
+            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (product.description.length == 0) {
+            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
+        } else if (product.title.length == 0) {
+            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
+        } else {
 
             productElement.price = product.price;
             productElement.title = product.title;
-            productElement.categoryTitle=product.categoryTitle;
+            productElement.categoryTitle = product.categoryTitle;
             productElement.weight = product.weight;
             productElement.description = product.description;
             return this.repo.save(productElement);
@@ -78,31 +62,21 @@ export class ProductsService {
     async UpdateWithParamsInBody(id: string, product: updateProductInBodyDto) {
         const productElement = await this.repo.findOneBy({id});
 
-        if(productElement==null)
-        {
-            throw new HttpException('wrong id',HttpStatus.NOT_FOUND)
-        }
-       else if(product.price<=0)
-        {
-            throw new HttpException('price must be higher than 0',HttpStatus.BAD_REQUEST)
-        }else if (product.weight<=0)
-        {
-            throw new HttpException('weight must be higher than 0',HttpStatus.BAD_REQUEST)
-        }
-        else if (product.description.length==0)
-        {
-            throw new HttpException('description cant be empty',HttpStatus.BAD_REQUEST)
-        }
-        else if (product.title.length==0)
-        {
-            throw new HttpException('title cant be empty',HttpStatus.BAD_REQUEST)
-        }
-        else
-        {
+        if (productElement == null) {
+            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
+        } else if (product.price <= 0) {
+            throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (product.weight <= 0) {
+            throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
+        } else if (product.description.length == 0) {
+            throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
+        } else if (product.title.length == 0) {
+            throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
+        } else {
 
             productElement.price = product.price;
             productElement.title = product.title;
-            productElement.categoryTitle=product.categoryTitle;
+            productElement.categoryTitle = product.categoryTitle;
             productElement.weight = product.weight;
             productElement.description = product.description;
             return this.repo.save(productElement);

@@ -1,4 +1,4 @@
-import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 import {OrderedProduct} from "./orderedProducts.entity";
 import {OrderState} from "./orderState.entity";
@@ -33,7 +33,6 @@ export class Order {
     // orderedProducts: OrderedProduct[];
 
 }
-
 
 
 // import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
