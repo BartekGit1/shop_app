@@ -42,31 +42,23 @@ export class ProductsService {
 
     async updateWithLink(id: string, product: updateProductInLinkDto) {
         const productElement = await this.repo.findOneBy({id});
-        if (productElement == null) {
-            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
-        }  else {
+
             productElement.price = product.price;
             productElement.title = product.title;
             productElement.categoryTitle = product.categoryTitle;
             productElement.weight = product.weight;
             productElement.description = product.description;
             return this.repo.save(productElement);
-        }
     }
 
     async UpdateWithParamsInBody(id: string, product: updateProductInBodyDto) {
         const productElement = await this.repo.findOneBy({id});
 
-        if (productElement == null) {
-            throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
-        }  else {
-
             productElement.price = product.price;
             productElement.title = product.title;
             productElement.categoryTitle = product.categoryTitle;
             productElement.weight = product.weight;
             productElement.description = product.description;
             return this.repo.save(productElement);
-        }
     }
 }

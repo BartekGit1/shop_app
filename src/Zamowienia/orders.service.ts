@@ -67,37 +67,14 @@ export class OrdersService {
     }
 
     async UpdateStateById(id: string, stan: string) {
-
-        if (stan == orderStateEnum.CANCELED || stan == orderStateEnum.NOTAPPROVED || stan == orderStateEnum.COMPLETED || stan == orderStateEnum.APPROVED) {
             const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[stan]})
-            const COMPLETED = await this.orderStateRepository.findOneBy({title: orderStateEnum.COMPLETED})
-            const NOTAPPROVED = await this.orderStateRepository.findOneBy({title: orderStateEnum.NOTAPPROVED})
-            const APPROVED = await this.orderStateRepository.findOneBy({title: orderStateEnum.APPROVED})
-            const CANCELED = await this.orderStateRepository.findOneBy({title: orderStateEnum.CANCELED})
-
             const productElement = await this.orderRepository.findOne({
                 where: {id: id},
                 relations: ['status'],
                 // loadRelationIds: true
             });
-
-
-            if (productElement == null) {
-                throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
-            } else if (JSON.stringify(productElement.status) == JSON.stringify(newState)) {
-                throw new HttpException('new status cant be the same as old one', HttpStatus.FORBIDDEN);
-            } else if (JSON.stringify(productElement.status) == JSON.stringify(COMPLETED) && JSON.stringify(newState) == JSON.stringify(NOTAPPROVED)) {
-                throw new HttpException('status cant be changed from completed to not approved', HttpStatus.FORBIDDEN);
-            } else if (JSON.stringify(productElement.status) == JSON.stringify(CANCELED)) {
-                throw new HttpException('status of canceled order cant be changed', HttpStatus.FORBIDDEN);
-            } else {
                 productElement.status = newState.id;
                 return this.orderRepository.save(productElement);
-
-            }
-        } else {
-            throw new HttpException('this status doesnt exist in database', HttpStatus.NOT_FOUND)
-        }
     }
 
     async getOrderByState(state: string) {

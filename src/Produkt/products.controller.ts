@@ -12,7 +12,7 @@ export class ProductsController {
 
     private productsService;
 
-    constructor(productsService: ProductsService) {
+    constructor(@InjectRepository(Product) private repo: Repository<Product>,productsService: ProductsService) {
         this.productsService = productsService;
     }
 
@@ -36,9 +36,9 @@ export class ProductsController {
 
 //localhost:3000/products/id PUT
     @Put('products/:id')
-    updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
-
-        if (body == null) {
+   async updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
+        const productElement = await this.repo.findOneBy({id:productId});
+        if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (body.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
@@ -56,8 +56,10 @@ export class ProductsController {
 
 //localhost:3000/products PUT
     @Put('products')
-    updateParamsInBody(@Body() body: updateProductInBodyDto) {
-        if (body == null) {
+   async updateParamsInBody(@Body() body: updateProductInBodyDto) {
+        const productElement = await this.repo.findOneBy({id:body.id});
+
+        if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (body.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
