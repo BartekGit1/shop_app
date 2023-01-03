@@ -20,7 +20,6 @@ export class Product {
     weight: number;
 
     @Column()
-    // @PrimaryColumn()
     categoryTitle: string;
 
     @ManyToOne(() => Category, (category) => category.products)

@@ -13,7 +13,7 @@ export class ProductsController {
 
     private productsService;
 
-    constructor(@InjectRepository(Product) private repo: Repository<Product>,@InjectRepository(Category) private categoryRepository: Repository<Category>,productsService: ProductsService) {
+    constructor(@InjectRepository(Product) private repo: Repository<Product>, @InjectRepository(Category) private categoryRepository: Repository<Category>, productsService: ProductsService) {
         this.productsService = productsService;
     }
 
@@ -37,13 +37,12 @@ export class ProductsController {
 
 //localhost:3000/products/id PUT
     @Put('products/:id')
-   async updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
-        const productElement = await this.repo.findOneBy({id:productId});
-        const category = await this.categoryRepository.findOneBy({title:body.categoryTitle});
+    async updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
+        const productElement = await this.repo.findOneBy({id: productId});
+        const category = await this.categoryRepository.findOneBy({title: body.categoryTitle});
         if (category == null) {
             throw new HttpException('this category doesnt exist in database', HttpStatus.NOT_FOUND)
-        }
-       else if (productElement == null) {
+        } else if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (body.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
@@ -55,19 +54,18 @@ export class ProductsController {
             throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
         } else {
 
-        this.productsService.updateWithLink(productId, body);
+            this.productsService.updateWithLink(productId, body);
         }
     }
 
 //localhost:3000/products PUT
     @Put('products')
-   async updateParamsInBody(@Body() body: updateProductInBodyDto) {
-        const productElement = await this.repo.findOneBy({id:body.id});
-        const category = await this.categoryRepository.findOneBy({title:body.categoryTitle});
+    async updateParamsInBody(@Body() body: updateProductInBodyDto) {
+        const productElement = await this.repo.findOneBy({id: body.id});
+        const category = await this.categoryRepository.findOneBy({title: body.categoryTitle});
         if (category == null) {
             throw new HttpException('this category doesnt exist in database', HttpStatus.NOT_FOUND)
-        }
-        else if (productElement == null) {
+        } else if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (body.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
@@ -78,8 +76,8 @@ export class ProductsController {
         } else if (body.title.length == 0) {
             throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
         } else {
-        const productId = body.id;
-        this.productsService.UpdateWithParamsInBody(productId, body);
+            const productId = body.id;
+            this.productsService.UpdateWithParamsInBody(productId, body);
         }
     }
 

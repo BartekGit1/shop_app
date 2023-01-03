@@ -11,7 +11,7 @@ import {Category} from "../entities/category.entity";
 @Injectable()
 export class ProductsService {
     constructor(@InjectRepository(Product) private repo: Repository<Product>,
-    @InjectRepository(Category) private categoryRepository: Repository<Category>) {
+                @InjectRepository(Category) private categoryRepository: Repository<Category>) {
     }
 
     getAll() {
@@ -23,20 +23,15 @@ export class ProductsService {
     }
 
     async create(product: addProductDto) {
-        const productElement = await this.repo.findOneBy({id:product.id});
-        const category = await this.categoryRepository.findOneBy({title:product.categoryTitle});
+        const productElement = await this.repo.findOneBy({id: product.id});
+        const category = await this.categoryRepository.findOneBy({title: product.categoryTitle});
         if (category == null) {
             throw new HttpException('this category doesnt exist in database', HttpStatus.NOT_FOUND)
-        }
-        else if(productElement!=null)
-        {
+        } else if (productElement != null) {
             throw new HttpException('element with this id exists in database', HttpStatus.FORBIDDEN)
-        }
-        else if(product.id.length==0)
-        {
+        } else if (product.id.length == 0) {
             throw new HttpException('id cant be empty', HttpStatus.BAD_REQUEST)
-        }
-        else if (product.price <= 0) {
+        } else if (product.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
         } else if (product.weight <= 0) {
             throw new HttpException('weight must be higher than 0', HttpStatus.BAD_REQUEST)
@@ -44,8 +39,7 @@ export class ProductsService {
             throw new HttpException('description cant be empty', HttpStatus.BAD_REQUEST)
         } else if (product.title.length == 0) {
             throw new HttpException('title cant be empty', HttpStatus.BAD_REQUEST)
-        }
-        else {
+        } else {
             const data = this.repo.create(product);
             return this.repo.save(data);
         }
@@ -54,22 +48,22 @@ export class ProductsService {
     async updateWithLink(id: string, product: updateProductInLinkDto) {
         const productElement = await this.repo.findOneBy({id});
 
-            productElement.price = product.price;
-            productElement.title = product.title;
-            productElement.categoryTitle = product.categoryTitle;
-            productElement.weight = product.weight;
-            productElement.description = product.description;
-            return this.repo.save(productElement);
+        productElement.price = product.price;
+        productElement.title = product.title;
+        productElement.categoryTitle = product.categoryTitle;
+        productElement.weight = product.weight;
+        productElement.description = product.description;
+        return this.repo.save(productElement);
     }
 
     async UpdateWithParamsInBody(id: string, product: updateProductInBodyDto) {
         const productElement = await this.repo.findOneBy({id});
 
-            productElement.price = product.price;
-            productElement.title = product.title;
-            productElement.categoryTitle = product.categoryTitle;
-            productElement.weight = product.weight;
-            productElement.description = product.description;
-            return this.repo.save(productElement);
+        productElement.price = product.price;
+        productElement.title = product.title;
+        productElement.categoryTitle = product.categoryTitle;
+        productElement.weight = product.weight;
+        productElement.description = product.description;
+        return this.repo.save(productElement);
     }
 }

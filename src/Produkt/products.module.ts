@@ -7,7 +7,7 @@ import {Category} from "../entities/category.entity";
 
 @Module({
     imports: [TypeOrmModule.forFeature([
-        Product,Category
+        Product, Category
     ])
     ],
     controllers: [ProductsController],

@@ -24,13 +24,11 @@ export class OrdersService {
     }
 
     async create(order: addOrderDto) {
-        const productElement = await this.orderRepository.findOneBy({id:order.id});
+        const productElement = await this.orderRepository.findOneBy({id: order.id});
 
-     if (order.id.length == 0)
-        {
+        if (order.id.length == 0) {
             throw new HttpException('id cant be null', HttpStatus.BAD_REQUEST)
-        }
-        else if (order.userName.length == 0) {
+        } else if (order.userName.length == 0) {
             throw new HttpException('username cant be empty', HttpStatus.BAD_REQUEST)
         } else if (order.email.length == 0) {
             throw new HttpException('email cant be empty', HttpStatus.BAD_REQUEST)
@@ -72,14 +70,14 @@ export class OrdersService {
     }
 
     async UpdateStateById(id: string, stan: string) {
-            const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[stan]})
-            const productElement = await this.orderRepository.findOne({
-                where: {id: id},
-                relations: ['status'],
-                // loadRelationIds: true
-            });
-                productElement.status = newState.id;
-                return this.orderRepository.save(productElement);
+        const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[stan]})
+        const productElement = await this.orderRepository.findOne({
+            where: {id: id},
+            relations: ['status'],
+            // loadRelationIds: true
+        });
+        productElement.status = newState.id;
+        return this.orderRepository.save(productElement);
     }
 
     async getOrderByState(state: string) {

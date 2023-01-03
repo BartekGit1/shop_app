@@ -21,10 +21,10 @@ export class OrdersController {
     }
 
 
-
     //localhost:3000/orders POST
     @Post('orders')
     async addOrder(@Body() orders: addOrderDto) {
+
         await this.ordersService.create(orders);
         return;
     }
@@ -41,8 +41,8 @@ export class OrdersController {
     }
 
     @Put('orders/:id')
-   async UpdateOrder(@Param('id') productId: string, @Body() body: { orderStatus: string }) {
-        body.orderStatus=body.orderStatus.toUpperCase()
+    async UpdateOrder(@Param('id') productId: string, @Body() body: { orderStatus: string }) {
+        body.orderStatus = body.orderStatus.toUpperCase()
         if (body.orderStatus == orderStateEnum.CANCELED || body.orderStatus == orderStateEnum.NOTAPPROVED || body.orderStatus == orderStateEnum.COMPLETED || body.orderStatus == orderStateEnum.APPROVED) {
 
             const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[body.orderStatus]})
@@ -68,9 +68,8 @@ export class OrdersController {
                 this.ordersService.UpdateStateById(productId, body.orderStatus);
                 return;
             }
+        } else {
+            throw new HttpException('this status doesnt exist in database', HttpStatus.NOT_FOUND)
         }
-        else {
-                throw new HttpException('this status doesnt exist in database', HttpStatus.NOT_FOUND)
-            }
     }
 }
