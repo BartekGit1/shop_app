@@ -82,7 +82,7 @@ export class OrdersService {
 
     async getOrderByState(state: string) {
 
-        const newStatus = await this.orderStateRepository.findOneBy({title: orderStateEnum[state]})
+        const newStatus = await this.orderStateRepository.findOneBy({id:parseInt(state)})
         return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.orderedProducts', 'orderedProducts')
             .where('order.status=:abc', {abc: newStatus.id}).getMany();
         // return await this.orderRepository.find({
