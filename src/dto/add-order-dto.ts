@@ -6,8 +6,8 @@ export class addOrderDto {
 
     // @IsDate()
     // @IsNotEmpty()
-    @IsString()
-    orderDate: string | null;
+    // @IsString()
+    // orderDate: String | null;
 
     @IsString()
     userName: string;

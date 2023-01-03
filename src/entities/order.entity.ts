@@ -8,7 +8,7 @@ export class Order {
     @PrimaryColumn()
     id: string;
 
-    @Column()
+    @Column({nullable:true})
     orderDate: Date;
 
     @Column()

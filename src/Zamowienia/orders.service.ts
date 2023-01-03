@@ -48,7 +48,7 @@ export class OrdersService {
             const zamowienie = this.orderRepository.create(
                 {
 
-                    orderDate: order.orderDate,
+                    // orderDate: order.orderDate,
                     userName: order.userName,
                     email: order.email,
                     phoneNumber: order.phoneNumber,
@@ -70,6 +70,7 @@ export class OrdersService {
     }
 
     async UpdateStateById(id: string, stan: string) {
+
         const newState = await this.orderStateRepository.findOneBy({title: orderStateEnum[stan]})
         const productElement = await this.orderRepository.findOne({
             where: {id: id},
@@ -77,6 +78,9 @@ export class OrdersService {
             // loadRelationIds: true
         });
         productElement.status = newState.id;
+        if(stan==orderStateEnum.APPROVED){
+            productElement.orderDate=new Date();
+        }
         return this.orderRepository.save(productElement);
     }
 
