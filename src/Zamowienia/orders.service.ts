@@ -24,8 +24,13 @@ export class OrdersService {
     }
 
     async create(order: addOrderDto) {
+        const productElement = await this.orderRepository.findOneBy({id:order.id});
 
-        if (order.userName.length == 0) {
+     if (order.id.length == 0)
+        {
+            throw new HttpException('id cant be null', HttpStatus.BAD_REQUEST)
+        }
+        else if (order.userName.length == 0) {
             throw new HttpException('username cant be empty', HttpStatus.BAD_REQUEST)
         } else if (order.email.length == 0) {
             throw new HttpException('email cant be empty', HttpStatus.BAD_REQUEST)

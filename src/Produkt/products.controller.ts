@@ -6,13 +6,14 @@ import {updateProductInBodyDto} from "../dto/update-product-in-body-dto";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Product} from "../entities/product.entity";
 import {Repository} from "typeorm";
+import {Category} from "../entities/category.entity";
 
 @Controller()
 export class ProductsController {
 
     private productsService;
 
-    constructor(@InjectRepository(Product) private repo: Repository<Product>,productsService: ProductsService) {
+    constructor(@InjectRepository(Product) private repo: Repository<Product>,@InjectRepository(Category) private categoryRepository: Repository<Category>,productsService: ProductsService) {
         this.productsService = productsService;
     }
 
@@ -38,7 +39,11 @@ export class ProductsController {
     @Put('products/:id')
    async updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
         const productElement = await this.repo.findOneBy({id:productId});
-        if (productElement == null) {
+        const category = await this.categoryRepository.findOneBy({title:body.categoryTitle});
+        if (category == null) {
+            throw new HttpException('this category doesnt exist in database', HttpStatus.NOT_FOUND)
+        }
+       else if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (body.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)
@@ -58,8 +63,11 @@ export class ProductsController {
     @Put('products')
    async updateParamsInBody(@Body() body: updateProductInBodyDto) {
         const productElement = await this.repo.findOneBy({id:body.id});
-
-        if (productElement == null) {
+        const category = await this.categoryRepository.findOneBy({title:body.categoryTitle});
+        if (category == null) {
+            throw new HttpException('this category doesnt exist in database', HttpStatus.NOT_FOUND)
+        }
+        else if (productElement == null) {
             throw new HttpException('wrong id', HttpStatus.NOT_FOUND)
         } else if (body.price <= 0) {
             throw new HttpException('price must be higher than 0', HttpStatus.BAD_REQUEST)

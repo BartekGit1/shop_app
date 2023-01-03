@@ -19,7 +19,8 @@ export class Product {
     @Column({type: 'decimal'})
     weight: number;
 
-    @PrimaryColumn()
+    @Column()
+    // @PrimaryColumn()
     categoryTitle: string;
 
     @ManyToOne(() => Category, (category) => category.products)

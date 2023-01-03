@@ -5,11 +5,13 @@ import {Repository} from "typeorm";
 import {addProductDto} from "../dto/add-product-dto";
 import {updateProductInBodyDto} from "../dto/update-product-in-body-dto";
 import {updateProductInLinkDto} from "../dto/update-product-dto";
+import {Category} from "../entities/category.entity";
 
 
 @Injectable()
 export class ProductsService {
-    constructor(@InjectRepository(Product) private repo: Repository<Product>) {
+    constructor(@InjectRepository(Product) private repo: Repository<Product>,
+    @InjectRepository(Category) private categoryRepository: Repository<Category>) {
     }
 
     getAll() {
@@ -21,7 +23,16 @@ export class ProductsService {
     }
 
     async create(product: addProductDto) {
-        if(product.id.length==0)
+        const productElement = await this.repo.findOneBy({id:product.id});
+        const category = await this.categoryRepository.findOneBy({title:product.categoryTitle});
+        if (category == null) {
+            throw new HttpException('this category doesnt exist in database', HttpStatus.NOT_FOUND)
+        }
+        else if(productElement!=null)
+        {
+            throw new HttpException('element with this id exists in database', HttpStatus.FORBIDDEN)
+        }
+        else if(product.id.length==0)
         {
             throw new HttpException('id cant be empty', HttpStatus.BAD_REQUEST)
         }
