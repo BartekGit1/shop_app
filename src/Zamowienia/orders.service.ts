@@ -24,6 +24,7 @@ export class OrdersService {
     }
 
     async create(order: addOrderDto) {
+
         const productElement = await this.orderRepository.findOneBy({id: order.id});
 
         if (order.id.length == 0) {
@@ -56,6 +57,7 @@ export class OrdersService {
                     id: order.id
 
 
+
                 }
             )
 
@@ -80,6 +82,7 @@ export class OrdersService {
         productElement.status = newState.id;
         if(stan==orderStateEnum.APPROVED){
             productElement.orderDate=new Date();
+            productElement.orderDate.setHours(productElement.orderDate.getHours()+1);
         }
         return this.orderRepository.save(productElement);
     }
@@ -92,6 +95,7 @@ export class OrdersService {
         // return await this.orderRepository.find({
         //     where:{orderStatus:state}
         // })
+
 
     }
 

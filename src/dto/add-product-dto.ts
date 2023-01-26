@@ -1,8 +1,8 @@
 import {IsNumber, IsString} from "class-validator";
 
 export class addProductDto {
-    @IsString()
-    id: string;
+    // @IsString()
+    // id: string;
 
     @IsString()
     title: string;

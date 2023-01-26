@@ -1,10 +1,11 @@
-import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {Category} from "./category.entity";
 
 @Entity()
 export class Product {
 
-    @PrimaryColumn({unique: true})
+    @PrimaryGeneratedColumn()
+    // @PrimaryColumn({unique: true})
     id: string;
 
     @Column()

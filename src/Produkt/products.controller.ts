@@ -38,6 +38,7 @@ export class ProductsController {
 //localhost:3000/products/id PUT
     @Put('products/:id')
     async updateInLink(@Param('id') productId: string, @Body() body: updateProductInLinkDto) {
+        console.log(productId)
         const productElement = await this.repo.findOneBy({id: productId});
         const category = await this.categoryRepository.findOneBy({title: body.categoryTitle});
         if (category == null) {
