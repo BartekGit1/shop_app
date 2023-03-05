@@ -7,7 +7,7 @@ Program that allows to add products to database with referring to the category e
 ## Installation
 
 ```bash
-$ npm install![Uploading Postgresql.png…]()
+$ npm install
 
 ```
 
