@@ -1,12 +1,14 @@
 Program that allows to add products to database with referring to the category entity, creating orders that includes adding more than one product that exists in database. State of order can be changed.
 In this project nestjs framework, docker, postgreSQL were used.
 
+![Postgresql](https://user-images.githubusercontent.com/101356991/222986016-aca0e866-93eb-4ba8-bcaf-d53da6cf021d.png)
 
 
 ## Installation
 
 ```bash
-$ npm install
+$ npm install![Uploading Postgresql.png…]()
+
 ```
 
 ## Running the app
