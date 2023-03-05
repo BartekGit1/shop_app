@@ -1,3 +1,6 @@
+Program that allows to add products to database with referring to the category entity, creating orders that includes adding more than one product that exists in database. State of order can be changed.
+In this project nestjs framework, docker, postgreSQL were used.
+
 
 
 ## Installation
